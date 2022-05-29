@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free movie catalogue for you">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="./css/style.css">
+    <meta name="theme-color" content="#db0000"/>
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <title>Painting Artworks</title>
+    <script src="https://use.fontawesome.com/b070c8f1df.js"></script>
+</head>
+<body>
+  <header class="app-bar">
+    <div class="app-bar__menu">
+      <button id="hamburgerButton">☰</button>
+    </div>
+    <div class="app-bar__brand">
+      <h1>Painting Artworks</h1>
+    </div>
+    <nav id="navigationDrawer" class="app-bar__navigation">
+      <ul>
+        <li><a href="/">Creators</a></li>
+        <li><a href="/painting">Painting</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="mainContent">
+    <div class="search-wrapper">
+      <div class="input-holder">
+        <form action="/creators" >
+          <input type="search" name="search" id="search" class="search-input" >
+          <!-- <button type="submit">Submit</button> -->
+        </form>
+        <!-- <input type="search" class="search-input" name="" placeholder="Type to search" /> -->
+        <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
+      </div>
+      <span class="close" onclick="searchToggle(this, event);"></span>
+    </div>
+    
+    <div class="movies" id="movies">
+      <% if(data.length > 0){ %>
+        <% data.forEach(function(item) { %>
+        <div class="movie-item">
+          <div class="movie-item__header">
+              <img class="movie-item__header__poster" alt="${movie.title}"
+                  src="<%= item.img_url %>">
+              <!-- <div class="movie-item__header__rating">
+                  <p>⭐️<span class="movie-item__header__rating__score">${movie.vote_average}</span></p>
+              </div> -->
+          </div>
+          <div class="movie-item__content">
+              <h3><a href="${`/#/detail/${movie.id}`}" onclick="openModal()"><%= item.nama %></a></h3>
+              <p>Tanggal Lahir : <%= item.tanggal_lahir %></p>
+              <p>Tanggal Wafat : <%= item.tanggal_wafat %></p>
+              <p>Daerah Asal : <%= item.daerah_asal %></p>
+              <p>Nama Lukisan : <%= item.nama_lukisan %></p>
+          </div>
+        </div>
+        <% }); %> 
+      <%} else{ %>
+        <h1>empty</h1>
+      <% } %>
+    </div>
+    
+  </main>
+  </div>
+  <script
+			  src="https://code.jquery.com/jquery-3.6.0.js"
+			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+			  crossorigin="anonymous"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
