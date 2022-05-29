@@ -33,9 +33,7 @@
       <div class="input-holder">
         <form action="/creators" >
           <input type="search" name="search" id="search" class="search-input" >
-          <!-- <button type="submit">Submit</button> -->
         </form>
-        <!-- <input type="search" class="search-input" name="" placeholder="Type to search" /> -->
         <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
       </div>
       <span class="close" onclick="searchToggle(this, event);"></span>
@@ -48,16 +46,12 @@
           <div class="movie-item__header">
               <img class="movie-item__header__poster" alt="${movie.title}"
                   src="<%= item.img_url %>">
-              <!-- <div class="movie-item__header__rating">
-                  <p>⭐️<span class="movie-item__header__rating__score">${movie.vote_average}</span></p>
-              </div> -->
           </div>
           <div class="movie-item__content">
               <h3><a href="${`/#/detail/${movie.id}`}" onclick="openModal()"><%= item.nama %></a></h3>
               <p>Tanggal Lahir : <%= item.tanggal_lahir %></p>
               <p>Tanggal Wafat : <%= item.tanggal_wafat %></p>
               <p>Daerah Asal : <%= item.daerah_asal %></p>
-              <p>Nama Lukisan : <%= item.nama_lukisan %></p>
           </div>
         </div>
         <% }); %> 
