@@ -49,8 +49,11 @@
             </div>
         </div>
         <div class="movie-item__content">
-            <h3><a class="detail"><%= item.nama %></a></h3>
+            <h3><a class="detail" href="#"><%= item.nama %></a></h3>
             <p>Nama Pembuat : <%= item.nama_pencipta %></p>
+            <% if(item.makna != null){ %>
+              <p>"<%= item.makna %>"</p>
+            <% }; %>
         </div>
       </div>
       <% }); %>

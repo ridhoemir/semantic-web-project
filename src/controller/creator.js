@@ -14,5 +14,9 @@ router.get('/creators', (req, res) => {
   creator.search(req, res);
 });
 
+router.get('/creators/:id', (req, res) => {
+  creator.getDetail(req, res);
+});
+
 module.exports = router;
 
