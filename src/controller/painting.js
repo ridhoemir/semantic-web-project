@@ -10,5 +10,8 @@ router.get('/', (req, res) => {
   }
 });
 
+router.get('/:id', (req, res) => {
+  painting.getDetail(req, res);
+});
 
 module.exports = router;

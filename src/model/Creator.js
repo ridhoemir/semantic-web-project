@@ -55,12 +55,11 @@ exports.search = (req, res) => {
       
     }
   `;
-  // console.log(query);
   d3.sparql(url, query).then((data) => {
-    console.log(data);
     res.render('index', { data });
   }).catch((err) => {
-    console.log(err);
+    const empty = true;
+    res.render('index', { empty });
   });
 };
 

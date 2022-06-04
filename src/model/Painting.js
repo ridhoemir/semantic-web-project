@@ -55,7 +55,6 @@ exports.search = (req, res) => {
       
     }
   `;
-  // console.log(query);
   d3.sparql(url, query).then((data) => {
     console.log(data);
     res.render('painting', { data });
@@ -65,32 +64,30 @@ exports.search = (req, res) => {
 };
 
 exports.getDetail = (req, res) => {
-  const params = req.query.search;
+  const params = req.params.id;
   const url = 'http://localhost:3030/painting-artworks-with-img/query';
   const query = `
   prefix : <http://www.semanticweb.org/ridhoemirf/ontologies/painting-artworks#> 
   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  SELECT ?subject ?nama ?tahun_pembuatan ?nama_pencipta ?img_url ?makna
+  SELECT  ?nama ?tahun_pembuatan ?nama_pencipta ?img_url ?makna
   WHERE
     {
-        ?subject a :Painting .
-        ?subject :nama ?nama .
-        ?subject :tahun_pembuatan ?tahun_pembuatan .
-        ?subject :img_url ?img_url .
-        OPTIONAL { ?subject :makna ?makna }.
+        :${params} a :Painting .
+        :${params} :nama ?nama .
+        :${params} :tahun_pembuatan ?tahun_pembuatan .
+        :${params} :img_url ?img_url .
+        OPTIONAL { :${params} :makna ?makna }.
 
-        ?subject :nama_pencipta ?creator .
+        :${params} :nama_pencipta ?creator .
         ?creator :nama ?nama_pencipta .
-
-        filter(?subject = "${params}") 
       
     }
   `;
-  // console.log(query);
+  
   d3.sparql(url, query).then((data) => {
     console.log(data);
-    res.render('painting', { data });
+    res.send( data );
   }).catch((err) => {
     console.log(err);
   });
