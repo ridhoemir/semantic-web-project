@@ -22,7 +22,7 @@ $(document).on('click', '#detailData', function (event) {
     $('#modalTglLahir').text(data[0].tanggal_lahir);
     $('#modalTglWafat').text(data[0].tanggal_wafat);
     $('#modalDaerah').text(data[0].daerah_asal);
-    $('#modalNamaLukisan').text(data[0].nama_lukisan);
+    $('#modalNamaLukisan').text(data[0].list_lukisan);
   });
 });
 

@@ -8,7 +8,7 @@ exports.getAll = (req, res) => {
   prefix : <http://www.semanticweb.org/ridhoemirf/ontologies/painting-artworks#> 
   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  SELECT ?subject ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal ?nama_lukisan ?img_url 
+  SELECT ?subject ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal (GROUP_CONCAT(?nama_lukisan;SEPARATOR=", " )as ?list_lukisan) ?img_url 
   WHERE
     {
         ?subject a :Creator .
@@ -22,8 +22,9 @@ exports.getAll = (req, res) => {
         ?lukisan :nama ?nama_lukisan.
       
     }
+GROUP BY ?subject ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal ?img_url
   `;
-  // console.log(query);
+  
   d3.sparql(url, query).then((data) => {
     res.render('index', { data });
   }).catch((err) => {
@@ -38,7 +39,7 @@ exports.search = (req, res) => {
   prefix : <http://www.semanticweb.org/ridhoemirf/ontologies/painting-artworks#> 
   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  SELECT ?subject ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal ?nama_lukisan ?img_url 
+  SELECT ?subject ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal (GROUP_CONCAT(?nama_lukisan;SEPARATOR=", " )as ?list_lukisan) ?img_url 
   WHERE
     {
         ?subject a :Creator .
@@ -50,11 +51,11 @@ exports.search = (req, res) => {
       
         ?subject :hasil_lukisan ?lukisan.
         ?lukisan :nama ?nama_lukisan.
-
-        filter(regex(?nama, "${params}", "i" )|| regex(?tanggal_lahir, "${params}", "i" ) || regex(?tanggal_wafat, "${params}", "i" ) || regex(?daerah_asal, "${params}", "i" ) || regex(?nama_lukisan, "${params}", "i" )) 
       
+        filter(regex(?nama, "${params}", "i" )|| regex(?tanggal_lahir, "${params}", "i" ) || regex(?tanggal_wafat, "${params}", "i" ) || regex(?daerah_asal, "${params}", "i" ) || regex(?nama_lukisan, "${params}", "i" )) 
     }
-  `;
+GROUP BY ?subject ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal ?img_url
+      `;
   d3.sparql(url, query).then((data) => {
     res.render('index', { data });
   }).catch((err) => {
@@ -70,7 +71,7 @@ exports.getDetail = (req, res) => {
   prefix : <http://www.semanticweb.org/ridhoemirf/ontologies/painting-artworks#> 
   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  SELECT  ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal ?nama_lukisan ?img_url 
+  SELECT  ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal (GROUP_CONCAT(?nama_lukisan;SEPARATOR=", " )as ?list_lukisan) ?img_url 
   WHERE
     {
         :${params} a :Creator .
@@ -82,13 +83,15 @@ exports.getDetail = (req, res) => {
       
         :${params} :hasil_lukisan ?lukisan.
         ?lukisan :nama ?nama_lukisan.
+      
     }
+  GROUP BY ?nama ?tanggal_lahir ?tanggal_wafat ?daerah_asal ?img_url
 
+  
   `;
   d3.sparql(url, query).then((data) => {
     console.log(data);
     res.send(data);
-    // res.render('index', { data });
   }).catch((err) => {
     console.log(err);
   });
